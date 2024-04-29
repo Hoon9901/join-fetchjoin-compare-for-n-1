@@ -56,4 +56,4 @@
 ### 결론
 - N + 1 문제 방지를 위해선 Fetch Join, Entity Graph 방식을 사용한다
 - JPA는 만능이 아니다 일반 JOIN으로 연관 조회로는 N + 1 문제 해결은 커녕 데이터 조회가 발생하지 않는다.
-- Fetch Join, Entity Graph 뿐만 아니라 BatchSize 여러 기능을 제공하니 최적화를 통해 N + 1 문제를 해결하고 성능 최적화를 진행하자.
+- Fetch Join, Entity Graph 뿐만 아니라 BatchSize 여러 기능을 제공하니 이를 적절히 사용해 N + 1를 해결하고 성능 최적화를 진행하자.
