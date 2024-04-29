@@ -47,6 +47,8 @@
     from team t1_0 join member m1_0
       on t1_0.id=m1_0.team_id
 ```
+![image](https://github.com/Hoon9901/join-fetchjoin-compare-for-n-1/assets/5029567/97d411f6-f37f-4433-84db-a1d5bf845318)
+
 - 연관관계 엔티티 조회 시 `LazyInitializationException` 예외 발생
   - 이를 통해 JPA는 SELECT 절에 포함된 속성(엔티티 데이터)을 통해 영속성 처리, JOIN 으로 지정한 연관 엔티티는 영속성 관여를 하지 않음을 알 수 있다.
   - 즉 일반 JOIN 을 이용해 연관관계 엔티티를 조회하지 말고 다른 방식을 사용해야한다.
