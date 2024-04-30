@@ -25,6 +25,18 @@ Member, MemberOption 1:1 관계를 JPA 양방향 매핑한 이유
   - 대상 테이블이 연관관계의 주인이 되므로 Nullable 하지 않음
   - 1:1 -> 1:N 으로 확장 시 테이블 구조를 유지할 수 있음 (애플리케이션 코드만 변경)
 
+### FetchType 비교
+
+- FetchType.Lazy
+  - 조회할려는 객체를 Proxy 객체로 감싸 지연 로딩을 제공
+  - 장점 : 빠른 클래스 로딩, 적은 메모리 소비
+  - 단점 : LazyInitlizaed 로 인한 추가적인 조회 쿼리 (N + 1) 로 성능영향, LazyInitializationException 발생 가능 (Session 내부가 아닐 시) 
+  - OneToOne 에서 사용할려면 Non-Null or 단방향관계 (Nullable -> 프록시 객체 X)
+- FetchType.Eager
+  - 데이터 조회 시 JOIN 을 통해 데이터를 한꺼번에 로딩해 제공
+  - 장점 : 지연로딩과 관련된 성능 영향이 없음
+  - 단점 : 클래스 로드 시간이 길어짐(추가적인 객체 오버헤드 발생), OOM Heap 발생으로 인한 성능 영향 (많은 데이터 조회 시)
+
 ### Fetch Join
 
 ```java
