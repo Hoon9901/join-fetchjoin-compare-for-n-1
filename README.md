@@ -1,9 +1,29 @@
 ## N + 1 문제 해결을 위한 JPA 가 제공하는 여러 JOIN 방식의 동작 원리 분석
 
+JPA Interface (CrudRepository) 가 제공하는 메서드를 사용할 때 N + 1 문제를 살펴보고 해결해보자
+
+그리고 객체 연관관계에 따른 N + 1 문제도 만나보고 해결해본다.
+
 ### 테스트 환경
 - Java 17
 - Spring Boot 3.2
 - H2 DB
+
+### 도메인 구조
+
+- Team 1 - Member N (양방향 매핑)
+- Member 1 - MemberOption 1 (양방향 매핑)
+
+Member, MemberOption 1:1 관계를 JPA 양방향 매핑한 이유
+- Member는 사용자 정보, MemberOption은 사용자의 추가적인 정보를 관리하는 테이블
+- Member가 주 테이블이고 MemberOption이 대상 테이블임
+- MemberOption 테이블이 외래키를 관리하는것을 선호 (전통적인 테이블 설계 지향)
+  - JPA 에서는 OneToOne 관계에선 주 테이블 (사용자가 주)이 외래키를 관리해야함
+  - 1:1 관계 매핑을 위해 객체지향 방식에선 Member가 MemberOption 필드를 갖고있는게 맞음
+  - 하지만 MemberOption 객체가 Nullable 함
+- 따라서 OneToOne 방식을 대상 테이블에서 관리하기 위해선 양방향 매핑을 해야한다
+  - 대상 테이블이 연관관계의 주인이 되므로 Nullable 하지 않음
+  - 1:1 -> 1:N 으로 확장 시 테이블 구조를 유지할 수 있음 (애플리케이션 코드만 변경)
 
 ### Fetch Join
 

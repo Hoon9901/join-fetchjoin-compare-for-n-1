@@ -21,4 +21,7 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     public Team team;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private MemberOption memberOption;
+
 }
